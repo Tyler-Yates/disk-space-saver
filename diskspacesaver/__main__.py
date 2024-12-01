@@ -12,15 +12,17 @@ from .mongo_util import MongoUtil
 
 def get_drives_info(starting_drive_letter: str) -> list[Drive]:
     if len(starting_drive_letter) != 1:
-        raise ValueError(f"Only a single letter should be provided for 'starting_drive_letter',"
-                         f" but {starting_drive_letter!r} was found instead.")
+        raise ValueError(
+            f"Only a single letter should be provided for 'starting_drive_letter',"
+            f" but {starting_drive_letter!r} was found instead."
+        )
 
     starting_drive_letter = starting_drive_letter.upper()
 
     drives = []
 
     # Get a list of all possible drive letters
-    for drive_letter in range(ord(starting_drive_letter), ord('Z') + 1):
+    for drive_letter in range(ord(starting_drive_letter), ord("Z") + 1):
         drive = f"{chr(drive_letter)}:\\"
         if not os.path.exists(drive):
             continue
@@ -33,6 +35,7 @@ def get_drives_info(starting_drive_letter: str) -> list[Drive]:
             print(f"Error retrieving info for {drive}: {e}")
 
     return drives
+
 
 def main():
     # This code only works on Windows

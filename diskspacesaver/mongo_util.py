@@ -34,8 +34,8 @@ class MongoUtil:
                     timeseries={
                         "timeField": TIMESTAMP_FIELD,
                         "metaField": META_FIELD,
-                        "granularity": TIME_SERIES_GRANULARITY
-                    }
+                        "granularity": TIME_SERIES_GRANULARITY,
+                    },
                 )
                 print(f"Time-series collection '{COLLECTION_NAME}' created successfully.")
             except Exception as e:
@@ -46,11 +46,13 @@ class MongoUtil:
     def save_drive_info(self, drives: list[Drive]):
         documents = []
         for drive in drives:
-            documents.append({
-                TIMESTAMP_FIELD: datetime.now(timezone.utc),
-                META_FIELD: drive.drive_letter,
-                CAPACITY_FIELD: drive.capacity_bytes,
-                FREE_FIELD: drive.free_bytes,
-            })
+            documents.append(
+                {
+                    TIMESTAMP_FIELD: datetime.now(timezone.utc),
+                    META_FIELD: drive.drive_letter,
+                    CAPACITY_FIELD: drive.capacity_bytes,
+                    FREE_FIELD: drive.free_bytes,
+                }
+            )
 
         self.collection.insert_many(documents)
