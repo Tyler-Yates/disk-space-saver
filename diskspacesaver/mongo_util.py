@@ -43,12 +43,17 @@ class MongoUtil:
 
         self.collection = db[COLLECTION_NAME]
 
+        print(f"Collection {COLLECTION_NAME} has {self.collection.count_documents(filter={})} documents")
+
+        # Save the datetime here so every document gets the same value
+        self.timestamp = datetime.now(timezone.utc)
+
     def save_drive_info(self, drives: list[Drive]):
         documents = []
         for drive in drives:
             documents.append(
                 {
-                    TIMESTAMP_FIELD: datetime.now(timezone.utc),
+                    TIMESTAMP_FIELD: self.timestamp,
                     META_FIELD: drive.drive_letter,
                     CAPACITY_FIELD: drive.capacity_bytes,
                     FREE_FIELD: drive.free_bytes,
